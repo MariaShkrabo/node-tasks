@@ -28,9 +28,14 @@ async function update(id, taskDescription) {
     })
 }
 
+async function remove(id) {
+    await db.query(`DELETE FROM "tasks" WHERE "ID"=${id}`);
+}
+
 module.exports = {
     findAll,
     create,
     findById,
     update,
+    remove
 }

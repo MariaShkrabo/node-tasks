@@ -64,9 +64,28 @@ async function updateTask(req, res, id) {
     }
 }
 
+async function deleteTask(req, res, id) {
+    try {
+        const task = await Task.findById(id);
+        console.log(id);
+        if(!task) {
+            res.writeHead(404, { 'Content-Type': 'application/json' })
+            res.end(JSON.stringify({ message: 'Task Not Found' }))
+        } else {
+            await Task.remove(id);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: `Task with id=${id} was deleted` }));
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     getTasks,
     createTask,
     getTask,
     updateTask,
+    deleteTask
 }
