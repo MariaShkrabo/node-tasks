@@ -1,5 +1,5 @@
 const http = require("http");
-//require("dotenv").config();
+require("dotenv").config();
 const { getTasks, createTask } = require('./controllers/taskController')
 
 const server = http.createServer((req, res) => {

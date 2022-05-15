@@ -5,7 +5,6 @@ function getRequestBody(req) {
             req.on('data', (chunk) => {
                 body += chunk.toString();
             })
-            
             req.on('end', () => {
                 resolve(body);
             })
