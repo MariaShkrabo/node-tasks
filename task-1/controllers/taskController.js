@@ -43,8 +43,30 @@ async function getTask(req, res, id) {
     }
 }
 
+async function updateTask(req, res, id) {
+    try {
+        const task = await Task.findById(id);
+
+        if(!task) {
+            res.writeHead(404, { 'Content-Type': 'application/json' })
+            res.end(JSON.stringify({ message: 'Task Not Found' }))
+        } else {
+            const body = await getRequestBody(req);
+            const { taskDescription } = JSON.parse(body);
+
+            const updatedTask = await Task.update(id, taskDescription);
+
+            res.writeHead(200, { 'Content-Type': 'application/json' })
+            return res.end(JSON.stringify(updatedTask)) 
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getTasks,
     createTask,
     getTask,
+    updateTask,
 }

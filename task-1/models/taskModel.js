@@ -21,8 +21,16 @@ async function findById(id) {
     })
 }
 
+async function update(id, taskDescription) {
+    const updatedTask = await db.query(`UPDATE "tasks" SET "taskDescription"='${taskDescription}' WHERE "ID"=${id} RETURNING *`);
+    return new Promise((resolve, reject) => {
+        resolve(updatedTask.rows[0]);
+    })
+}
+
 module.exports = {
     findAll,
     create,
-    findById
+    findById,
+    update,
 }
