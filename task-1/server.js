@@ -1,12 +1,15 @@
 const http = require("http");
 require("dotenv").config();
-const { getTasks, createTask } = require('./controllers/taskController')
+const { getTasks, createTask, getTask } = require('./controllers/taskController')
 
 const server = http.createServer((req, res) => {
     if(req.url === "/tasks" && req.method === "GET"){
         getTasks(req, res);
     } else if (req.url === "/tasks" && req.method === "POST"){
         createTask(req, res);
+    }else if(req.url.match(/\/tasks\/\w+/) && req.method === 'GET') {
+        const id = req.url.split('/')[2];
+        getTask(req, res, id);
     }
     else {
         res.writeHead(404, {"Content-Type": "application/json"});
