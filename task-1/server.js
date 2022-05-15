@@ -1,6 +1,6 @@
 const http = require("http");
 require("dotenv").config();
-const { getTasks, createTask, getTask, updateTask, deleteTask } = require('./controllers/taskController')
+const { getTasks, createTask, getTask, updateTask, deleteTask, replaceTask } = require('./controllers/taskController')
 
 const server = http.createServer((req, res) => {
     if(req.url === "/tasks" && req.method === "GET"){
@@ -10,12 +10,15 @@ const server = http.createServer((req, res) => {
     } else if(req.url.match(/\/tasks\/\w+/) && req.method === 'GET') {
         const id = req.url.split('/')[2];
         getTask(req, res, id);
-    } else if(req.url.match(/\/tasks\/\w+/) && req.method === 'PUT') {
+    } else if(req.url.match(/\/tasks\/\w+/) && req.method === 'PATCH') {
         const id = req.url.split('/')[2];
         updateTask(req, res, id);
     } else if(req.url.match(/\/tasks\/\w+/) && req.method === 'DELETE') {
         const id = req.url.split('/')[2];
         deleteTask(req, res, id);
+    } else if(req.url.match(/\/tasks\/\w+/) && req.method === 'PUT') {
+        const id = req.url.split('/')[2];
+        replaceTask(req, res, id);
     }
     else {
         res.writeHead(404, {"Content-Type": "application/json"});

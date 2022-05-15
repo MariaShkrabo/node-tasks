@@ -1,7 +1,6 @@
 const Task = require("../models/taskModel");
 const { getRequestBody } = require("../utils");
 
-
 async function getTasks(req, res) {
     try {
         const tasks = await Task.findAll();
@@ -64,6 +63,27 @@ async function updateTask(req, res, id) {
     }
 }
 
+async function replaceTask(req, res, prevId) {
+    try {
+        const task = await Task.findById(prevId);
+
+        if(!task) {
+            res.writeHead(404, { 'Content-Type': 'application/json' })
+            res.end(JSON.stringify({ message: 'Task Not Found' }))
+        } else {
+            const body = await getRequestBody(req);
+            const { ID, taskDescription } = JSON.parse(body);
+
+            const replacedTask = await Task.replace(prevId, taskDescription, ID);
+
+            res.writeHead(200, { 'Content-Type': 'application/json' })
+            return res.end(JSON.stringify(replacedTask)) 
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 async function deleteTask(req, res, id) {
     try {
         const task = await Task.findById(id);
@@ -87,5 +107,6 @@ module.exports = {
     createTask,
     getTask,
     updateTask,
-    deleteTask
+    deleteTask,
+    replaceTask
 }

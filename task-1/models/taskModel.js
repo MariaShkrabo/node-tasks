@@ -28,6 +28,13 @@ async function update(id, taskDescription) {
     })
 }
 
+async function replace(prevID, taskDescription, ID) {
+    const replacedTask = await db.query(`UPDATE "tasks" SET "ID"=${ID}, "taskDescription"='${taskDescription}' WHERE "ID"=${prevID} RETURNING *`);
+    return new Promise((resolve, reject) => {
+        resolve(replacedTask.rows[0]);
+    })
+}
+
 async function remove(id) {
     await db.query(`DELETE FROM "tasks" WHERE "ID"=${id}`);
 }
@@ -37,5 +44,6 @@ module.exports = {
     create,
     findById,
     update,
-    remove
+    remove,
+    replace
 }
