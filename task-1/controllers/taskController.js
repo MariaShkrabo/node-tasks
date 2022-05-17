@@ -8,7 +8,7 @@ async function getTasks(req, res) {
         res.end(JSON.stringify(tasks.rows));
 
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 
@@ -22,7 +22,7 @@ async function createTask(req, res) {
         res.end(JSON.stringify(newTask));
 
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 }
 
