@@ -29,7 +29,36 @@ class TaskController {
             const task = await Task.findById(id);
             return res.json(task);
         } catch (e) {
-            res.status(500).json(e)
+            res.status(500).json(e);
+        }
+    }
+
+    async modify(req, res){
+        try {
+            const id = req.params.id;
+            const taskData = req.body;
+            if (!id) {
+                res.status(400).json({message: 'No ID specified'});
+            }
+            const modifiedTask = await Task.findByIdAndUpdate(id, taskData, {new: true});
+            return res.json(modifiedTask);
+        } catch (e) {
+            res.status(500).json(e);
+        }
+    }
+
+    async replace(req, res){
+        try {
+            const id = req.params.id;
+            const taskData = req.body;
+            if (!id) {
+                res.status(400).json({message: 'No ID specified'});
+            }
+            await Task.replaceOne({ _id: id }, taskData);
+            const modifiedTask = await Task.findById(id);
+            return res.json(modifiedTask);  
+        } catch (e) {
+            res.status(500).json(e);
         }
     }
 }
