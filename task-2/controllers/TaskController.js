@@ -35,7 +35,7 @@ class TaskController {
 
     async modify(req, res){
         try {
-            const id = req.params.id;
+            const {id} = req.params;
             const taskData = req.body;
             if (!id) {
                 res.status(400).json({message: 'No ID specified'});
@@ -49,7 +49,7 @@ class TaskController {
 
     async replace(req, res){
         try {
-            const id = req.params.id;
+            const {id} = req.params;
             const taskData = req.body;
             if (!id) {
                 res.status(400).json({message: 'No ID specified'});
@@ -57,6 +57,19 @@ class TaskController {
             await Task.replaceOne({ _id: id }, taskData);
             const modifiedTask = await Task.findById(id);
             return res.json(modifiedTask);  
+        } catch (e) {
+            res.status(500).json(e);
+        }
+    }
+
+    async delete(req, res){
+        try {
+            const {id} = req.params;
+            if (!id) {
+                res.status(400).json({message: 'No ID specified'});
+            }
+            const task = await Task.findByIdAndDelete(id);
+            return res.json(task); 
         } catch (e) {
             res.status(500).json(e);
         }

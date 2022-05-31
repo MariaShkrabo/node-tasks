@@ -8,5 +8,6 @@ router.get('/tasks', TaskController.getAll);
 router.get('/tasks/:id', TaskController.getOne);
 router.patch('/tasks/:id', TaskController.modify);
 router.put('/tasks/:id', TaskController.replace);
+router.delete('/tasks/:id', TaskController.delete);
 
 export default router;
