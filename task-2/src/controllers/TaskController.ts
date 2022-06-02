@@ -1,7 +1,8 @@
-import Task from "../models/Task.js";
+import Task from "../models/Task";
+import {Request, Response} from "express";
 
 class TaskController {
-    async create(req, res) {
+    async create(req: Request, res: Response) {
         try {
             const { description, isDone} = req.body;
             const task = await Task.create({ description, isDone});
@@ -11,7 +12,7 @@ class TaskController {
         }
     }
 
-    async getAll(req, res) {
+    async getAll(req: Request, res: Response) {
         try {
             const tasks = await Task.find();
             return res.json(tasks);
@@ -20,7 +21,7 @@ class TaskController {
         }
     }
 
-    async getOne(req, res) {
+    async getOne(req: Request, res: Response) {
         try{
             const {id} = req.params;
             if (!id) {
@@ -33,7 +34,7 @@ class TaskController {
         }
     }
 
-    async modify(req, res){
+    async modify(req: Request, res: Response){
         try {
             const {id} = req.params;
             const taskData = req.body;
@@ -47,7 +48,7 @@ class TaskController {
         }
     }
 
-    async replace(req, res){
+    async replace(req: Request, res: Response){
         try {
             const {id} = req.params;
             const taskData = req.body;
@@ -62,7 +63,7 @@ class TaskController {
         }
     }
 
-    async delete(req, res){
+    async delete(req: Request, res: Response){
         try {
             const {id} = req.params;
             if (!id) {
