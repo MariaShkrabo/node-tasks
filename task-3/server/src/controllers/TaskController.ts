@@ -6,7 +6,7 @@ class TaskController {
         try {
             const { description, isDone} = req.body;
             const task = await Task.create({ description, isDone});
-            res.header("Access-Control-Allow-Origin", `${process.env.CLIENT_URL}`);
+            res.header("Access-Control-Allow-Origin", "*");
             res.json(task)
         } catch (e) {
             res.status(500).json(e)
@@ -16,7 +16,7 @@ class TaskController {
     async getAll(req: Request, res: Response) {
         try {
             const tasks = await Task.find();
-            res.header("Access-Control-Allow-Origin", `${process.env.CLIENT_URL}`);
+            res.header("Access-Control-Allow-Origin", "*");
             return res.json(tasks);
         } catch (e) {
             res.status(500).json(e)
@@ -30,7 +30,7 @@ class TaskController {
                 res.status(400).json({message: 'No ID specified'});
             }
             const task = await Task.findById(id);
-            res.header("Access-Control-Allow-Origin", `${process.env.CLIENT_URL}`);
+            res.header("Access-Control-Allow-Origin", "*");
             return res.json(task);
         } catch (e) {
             res.status(500).json(e);
@@ -45,7 +45,7 @@ class TaskController {
                 res.status(400).json({message: 'No ID specified'});
             }
             const modifiedTask = await Task.findByIdAndUpdate(id, taskData, {new: true});
-            res.header("Access-Control-Allow-Origin", `${process.env.CLIENT_URL}`);
+            res.header("Access-Control-Allow-Origin", "*");
             return res.json(modifiedTask);
         } catch (e) {
             res.status(500).json(e);
@@ -61,7 +61,7 @@ class TaskController {
             }
             await Task.replaceOne({ _id: id }, taskData);
             const modifiedTask = await Task.findById(id);
-            res.header("Access-Control-Allow-Origin", `${process.env.CLIENT_URL}`);
+            res.header("Access-Control-Allow-Origin", "*");
             return res.json(modifiedTask);  
         } catch (e) {
             res.status(500).json(e);
@@ -75,7 +75,7 @@ class TaskController {
                 res.status(400).json({message: 'No ID specified'});
             }
             const task = await Task.findByIdAndDelete(id);
-            res.header("Access-Control-Allow-Origin", `${process.env.CLIENT_URL}`);
+            res.header("Access-Control-Allow-Origin", "*");
             return res.json(task); 
         } catch (e) {
             res.status(500).json(e);

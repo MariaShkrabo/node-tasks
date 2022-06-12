@@ -1,8 +1,13 @@
 import { TodoActionsContainer, TodoButton, TodoDescription, TodoDescriptionContainer, TodoImg, TodoIsDoneCheckbox, TodoListItemContainer } from "./TodoListItem.styles";
-import editImg from '../../images/pencil.svg';
-import deleteImg from '../../images/wastebasket.svg';
+import editImg from "../../images/pencil.svg";
+import deleteImg from "../../images/wastebasket.svg";
+import { Task } from "../../store/tasks/tasks.reducer";
 
-const TodoListItem = ({task}) => {
+type TaskProps = {
+    task: Task;
+}
+
+const TodoListItem = ({task}: TaskProps) => {
     return (
         <TodoListItemContainer>
             <TodoDescriptionContainer>

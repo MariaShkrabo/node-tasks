@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { MAIN_COLOR } from "../../constants/colors";
 
 export const Wrapper = styled.div`
   box-sizing: border-box;
@@ -12,5 +13,5 @@ export const Wrapper = styled.div`
 export const Header= styled.header`
     width: 100%;
     height: 150px;
-    background-color: #ff36ba;
+    background-color: ${MAIN_COLOR};
 `

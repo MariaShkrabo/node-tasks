@@ -7,6 +7,7 @@ export const TodoListItemContainer = styled.li`
   border-bottom: 2px solid ${SHADOW_COLOR};
   align-items: center;
   justify-content: space-between;
+  gap: 15px;
 
   &:last-child{
     border-bottom: none;
@@ -23,6 +24,7 @@ export const TodoDescription = styled.h2`
     font-size: 13px;
     margin: 0;
     color: #3f6386;
+    word-break: break-all;
 `
 
 export const TodoDescriptionContainer = styled.div`
