@@ -5,7 +5,6 @@ import { TodoListContainer } from "./TodoList.styles"
 
 const TodoList = () => {
     const { tasks, isLoading, error } = useTypedSelector(selectTasks);
-    console.log(tasks)
     return (
         <TodoListContainer>
             {tasks.map((task) => (

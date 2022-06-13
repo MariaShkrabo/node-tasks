@@ -15,3 +15,8 @@ export const Header= styled.header`
     height: 150px;
     background-color: ${MAIN_COLOR};
 `
+
+export const Footer= styled.footer`
+    width: 100%;
+    height: 30px;
+`

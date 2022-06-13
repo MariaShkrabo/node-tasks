@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import NewTodoForm from "../../components/NewTodoForm/NewTodoForm.component";
 import TodoList from "../../components/TodoList/TodoList.component";
 import { fetchTasks } from "../../store/tasks/tasks.action";
-import { Header, Wrapper } from "./Home.styles";
+import { Footer, Header, Wrapper } from "./Home.styles";
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -17,6 +17,7 @@ const Home = () => {
             <Header />
             <NewTodoForm />
             <TodoList />
+            <Footer />
         </Wrapper>
     )
 }

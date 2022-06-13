@@ -13,25 +13,66 @@ interface fetchTasksSuccess {
 }
 
 interface fetchTasksFail {
-  type:TASKS_ACTION_TYPES.FETCH_TASKS_FAILED;
-  payload: string ;
+  type: TASKS_ACTION_TYPES.FETCH_TASKS_FAILED;
+  payload: string;
 }
 
-export type TasksActions = fetchTasksStart | fetchTasksSuccess | fetchTasksFail;
+interface createTaskStart {
+  type: TASKS_ACTION_TYPES.CREATE_TASK_START;
+}
+
+interface createTaskSuccess {
+  type: TASKS_ACTION_TYPES.CREATE_TASK_SUCCESS;
+  payload: Task[];
+}
+
+interface createTaskFail {
+  type: TASKS_ACTION_TYPES.CREATE_TASK_FAILED;
+  payload: string;
+}
+
+export type TasksActions = fetchTasksStart | fetchTasksSuccess | fetchTasksFail | 
+                           createTaskStart | createTaskSuccess | createTaskFail;
 
 
 export const fetchTasks = () => {
   return async (dispatch: Dispatch<TasksActions>) => {
-      dispatch({
-        type: TASKS_ACTION_TYPES.FETCH_TASKS_START
+    dispatch({
+      type: TASKS_ACTION_TYPES.FETCH_TASKS_START
+    });
+    axios.get(`http://localhost:7000/tasks`)
+      .then((response) => {
+        dispatch({
+          type: TASKS_ACTION_TYPES.FETCH_TASKS_SUCCESS,
+          payload: response.data
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: TASKS_ACTION_TYPES.FETCH_TASKS_FAILED,
+          payload: error.message
+        });
       });
-      axios.get(`http://localhost:7000/tasks`)
-        .then((response) => {
-          dispatch({
-            type: TASKS_ACTION_TYPES.FETCH_TASKS_SUCCESS,
-            payload: response.data  
-          });
-        })
+  };
+};
 
-      };
-    };
+export const createTask = (newTask: Task) => {
+  return async (dispatch: Dispatch<TasksActions>) => {
+    dispatch({
+      type: TASKS_ACTION_TYPES.CREATE_TASK_START
+    });
+    axios.post(`http://localhost:7000/tasks`, newTask )
+      .then((response) => {
+        dispatch({
+          type: TASKS_ACTION_TYPES.CREATE_TASK_SUCCESS,
+          payload: response.data
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: TASKS_ACTION_TYPES.CREATE_TASK_FAILED,
+          payload: error.message
+        });
+      });
+  };
+};    
