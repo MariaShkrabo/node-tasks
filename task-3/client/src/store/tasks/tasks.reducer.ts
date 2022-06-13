@@ -22,7 +22,7 @@ export const TASKS_INITIAL_STATE = {
 
 export const tasksReducer = (state: TasksState = TASKS_INITIAL_STATE, action: TasksActions): TasksState => {
   switch (action.type) {
-    case TASKS_ACTION_TYPES.FETCH_TASKS_START || TASKS_ACTION_TYPES.CREATE_TASK_START:
+    case TASKS_ACTION_TYPES.FETCH_TASKS_START || TASKS_ACTION_TYPES.CREATE_TASK_START || TASKS_ACTION_TYPES.DELETE_TASK_START:
       return {
         ...state, isLoading: true
       }
@@ -30,7 +30,7 @@ export const tasksReducer = (state: TasksState = TASKS_INITIAL_STATE, action: Ta
       return {
         ...state, tasks: action.payload, isLoading: false, error: null
       }
-    case TASKS_ACTION_TYPES.FETCH_TASKS_FAILED || TASKS_ACTION_TYPES.FETCH_TASKS_FAILED:
+    case TASKS_ACTION_TYPES.FETCH_TASKS_FAILED || TASKS_ACTION_TYPES.CREATE_TASK_FAILED || TASKS_ACTION_TYPES.DELETE_TASK_FAILED:
       return {
         ...state, error: action.payload, isLoading: false
       }
@@ -38,6 +38,11 @@ export const tasksReducer = (state: TasksState = TASKS_INITIAL_STATE, action: Ta
       const tasks = state.tasks.concat(action.payload);
       return {
         ...state, tasks, isLoading: false, error: null
+      }
+    case TASKS_ACTION_TYPES.DELETE_TASK_SUCCESS:
+      state.tasks = state.tasks.filter((t) => t._id !== action.payload._id);
+      return {
+        ...state, isLoading: false, error: null
       }
     default:
       return state;

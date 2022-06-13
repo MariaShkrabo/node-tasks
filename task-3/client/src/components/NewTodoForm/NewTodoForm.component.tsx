@@ -5,7 +5,7 @@ import { AddNewTodoButton, AddNewTodoContainer, AddNewTodoInput, NewTodoFormCont
 
 const NewTodoForm = () => {
 
-    const [taskDescription, setTaskDescription] = useState({});
+    const [taskDescription, setTaskDescription] = useState('');
 
     const createNewTaskClick = () => {
         dispatch(createTask({
@@ -17,11 +17,14 @@ const NewTodoForm = () => {
     }
 
     const dispatch = useDispatch();
+    
     return (
         <NewTodoFormContainer>
             <NewTodoTitle>New Todo:</NewTodoTitle>
             <AddNewTodoContainer>
-                <AddNewTodoInput onChange={(event) => setTaskDescription(event.target.value)}/>
+                <AddNewTodoInput 
+                    onChange={(event) => setTaskDescription(event.target.value)}
+                />
                 <AddNewTodoButton onClick={createNewTaskClick}>Add</AddNewTodoButton>
             </AddNewTodoContainer>
         </NewTodoFormContainer>

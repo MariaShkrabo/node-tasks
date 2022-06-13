@@ -31,9 +31,23 @@ interface createTaskFail {
   payload: string;
 }
 
-export type TasksActions = fetchTasksStart | fetchTasksSuccess | fetchTasksFail | 
-                           createTaskStart | createTaskSuccess | createTaskFail;
+interface deleteTaskStart {
+  type: TASKS_ACTION_TYPES.DELETE_TASK_START;
+}
 
+interface deleteTaskSuccess {
+  type: TASKS_ACTION_TYPES.DELETE_TASK_SUCCESS;
+  payload: Task;
+}
+
+interface deleteTaskFail {
+  type: TASKS_ACTION_TYPES.DELETE_TASK_FAILED;
+  payload: string;
+}
+
+export type TasksActions = fetchTasksStart | fetchTasksSuccess | fetchTasksFail | 
+                           createTaskStart | createTaskSuccess | createTaskFail |
+                           deleteTaskStart | deleteTaskSuccess | deleteTaskFail ;
 
 export const fetchTasks = () => {
   return async (dispatch: Dispatch<TasksActions>) => {
@@ -75,4 +89,25 @@ export const createTask = (newTask: Task) => {
         });
       });
   };
-};    
+};
+
+export const deleteTask = (id: number) => {
+  return async (dispatch: Dispatch<TasksActions>) => {
+    dispatch({
+      type: TASKS_ACTION_TYPES.DELETE_TASK_START
+    });
+    axios.delete(`http://localhost:7000/tasks/${id}`,)
+      .then((response) => {
+        dispatch({
+          type: TASKS_ACTION_TYPES.DELETE_TASK_SUCCESS,
+          payload: response.data
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: TASKS_ACTION_TYPES.DELETE_TASK_FAILED,
+          payload: error.message
+        });
+      });
+  };
+};
